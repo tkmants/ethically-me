@@ -21,7 +21,7 @@ It documents six everyday moral moments, my Personal Ethics Manifesto, and my mo
 index.html     page content
 style.css      design and layout
 script.js      menu, dark mode, sounds, reflection pop-ups
-favicon.svg    browser tab icon
+favicon.ico    browser tab icon
 images/        portrait and Moral Moment photos
 ```
 
