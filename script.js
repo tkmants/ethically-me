@@ -94,62 +94,28 @@ themeToggle.addEventListener('click', () => {
 /* ---------- 4. HOVER SOUND EFFECTS ---------- */
 // The sound is a short, soft "tick" made with the Web Audio API,
 // so there are no audio files to download.
-//
-// IMPORTANT: every browser blocks sound until the visitor interacts with the page
-// (a click, tap, or key press). Hovering doesn't count. So the sounds switch on
-// with the visitor's FIRST click or tap anywhere on the page.
+// Note: browsers only allow sound after the visitor clicks or presses a key once.
 const soundToggle = document.querySelector('.sound-toggle');
 let soundOn = loadSetting('ethically-me-sound') !== 'off'; // on by default
 let audioCtx = null;
-let hasPlayedSound = false; // becomes true once the visitor has heard a sound
 
 function updateSoundButton() {
   soundToggle.setAttribute('aria-pressed', String(soundOn));
 }
 updateSoundButton();
 
-function audioIsReady() {
-  return audioCtx !== null && audioCtx.state === 'running';
-}
-
-// Create / wake up the audio engine. Must be called during a click, tap, or key press.
+// Create / wake up the audio engine on the visitor's first click or key press
 function unlockAudio() {
   const AudioEngine = window.AudioContext || window.webkitAudioContext;
-  if (!AudioEngine) return Promise.resolve();
-
-  if (!audioCtx) {
-    audioCtx = new AudioEngine();
-    // Playing a silent sound right away helps Safari unlock audio
-    const silence = audioCtx.createBufferSource();
-    silence.buffer = audioCtx.createBuffer(1, 1, 22050);
-    silence.connect(audioCtx.destination);
-    silence.start(0);
-  }
-
-  if (audioCtx.state === 'suspended') {
-    return audioCtx.resume().catch(() => {});
-  }
-  return Promise.resolve();
+  if (!AudioEngine) return;
+  if (!audioCtx) audioCtx = new AudioEngine();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
 }
-
-// Unlock on the first interaction of any kind, then stop listening
-const unlockEvents = ['pointerdown', 'touchend', 'click', 'keydown'];
-
-function handleFirstInteraction() {
-  unlockAudio().then(() => {
-    if (audioIsReady()) {
-      unlockEvents.forEach((type) =>
-        document.removeEventListener(type, handleFirstInteraction, true));
-    }
-  });
-}
-
-unlockEvents.forEach((type) =>
-  document.addEventListener(type, handleFirstInteraction, true));
+document.addEventListener('pointerdown', unlockAudio, { once: true });
+document.addEventListener('keydown', unlockAudio, { once: true });
 
 function playHoverSound() {
-  if (!soundOn || !audioIsReady()) return;
-  hasPlayedSound = true;
+  if (!soundOn || !audioCtx || audioCtx.state !== 'running') return;
 
   const now = audioCtx.currentTime;
   const tone = audioCtx.createOscillator();
@@ -160,7 +126,7 @@ function playHoverSound() {
   tone.frequency.exponentialRampToValueAtTime(990, now + 0.06); // quick rise
 
   volume.gain.setValueAtTime(0.0001, now);
-  volume.gain.exponentialRampToValueAtTime(0.04, now + 0.01);   // very quiet (change 0.04 to adjust)
+  volume.gain.exponentialRampToValueAtTime(0.10, now + 0.10);   // very quiet (change 0.04 to adjust)
   volume.gain.exponentialRampToValueAtTime(0.0001, now + 0.09); // fade out
 
   tone.connect(volume).connect(audioCtx.destination);
@@ -178,17 +144,11 @@ document.addEventListener('pointerover', (event) => {
 });
 
 soundToggle.addEventListener('click', () => {
-  // If sound is "on" but the visitor hasn't heard anything yet, this first click
-  // just wakes the sound up (with a preview tick) instead of muting it.
-  if (soundOn && !hasPlayedSound) {
-    unlockAudio().then(playHoverSound);
-    return;
-  }
-
+  unlockAudio();
   soundOn = !soundOn;
   updateSoundButton();
   saveSetting('ethically-me-sound', soundOn ? 'on' : 'off');
-  if (soundOn) unlockAudio().then(playHoverSound); // quick preview so you know it's on
+  if (soundOn) playHoverSound(); // quick preview so you know it's on
 });
 
 
