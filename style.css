@@ -1,0 +1,898 @@
+/* =========================================================
+   ETHICALLY ME — STYLESHEET
+
+   Contents
+   1.  Design tokens (colors, font, sizes)  ← change the look here
+       (light mode first, then dark mode)
+   2.  Base styles
+   3.  Layout helpers
+   4.  Navigation
+   5.  Hero
+   6.  Buttons
+   7.  Moral Self-Portrait
+   8.  Moral Moments
+   9.  Reflection pop-up window
+   10. My Moral Growth
+   11. Footer
+   12. Responsive adjustments (tablet & mobile)
+   ========================================================= */
+
+
+/* ---------- 1. DESIGN TOKENS ---------- */
+/* Change these values to restyle the whole site at once. */
+:root {
+  /* Palette picked to match the portrait: cool grey backdrop + denim blue */
+  --color-bg: #F4F6F8;          /* page background (cool off-white) */
+  --color-surface: #FFFFFF;     /* cards */
+  --color-alt: #EBEFF3;         /* background of the Moral Moments section */
+  --color-text: #22262B;        /* main text (dark charcoal) */
+  --color-muted: #555D66;       /* secondary text */
+  --color-border: #DCE2E8;      /* card borders and dividers */
+  --color-accent: #2F5A7A;      /* the one accent color (muted denim blue) */
+  --color-accent-hover: #22435C;/* button hover */
+  --color-accent-soft: #E3EAF1; /* light tint for icons and highlights */
+  --color-on-accent: #FFFFFF;   /* text on top of accent-colored buttons */
+  --color-header-bg: rgba(244, 246, 248, 0.94);
+  --color-growth-bg: #22435C;   /* My Moral Growth section */
+  --color-growth-text: #F1F5F8;
+  --shadow-soft: 0 6px 20px rgba(35, 39, 43, 0.06);
+  --shadow-dialog: 0 24px 60px rgba(0, 0, 0, 0.18);
+  color-scheme: light;
+
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --radius-card: 14px;
+  --radius-control: 8px;
+  --max-width: 1080px;
+  --text-width: 66ch;           /* comfortable reading line length */
+  --nav-height: 4rem;
+}
+
+/* DARK MODE — same token names, darker values.
+   The toggle button in the navbar switches <html data-theme="dark">. */
+:root[data-theme="dark"] {
+  --color-bg: #14181D;
+  --color-surface: #1C2229;
+  --color-alt: #181D23;
+  --color-text: #E6E9ED;
+  --color-muted: #A4ADB7;
+  --color-border: #2D353E;
+  --color-accent: #8DB4D6;
+  --color-accent-hover: #A9C8E3;
+  --color-accent-soft: #1F2F3D;
+  --color-on-accent: #0E1822;
+  --color-header-bg: rgba(20, 24, 29, 0.92);
+  --color-growth-bg: #1B3042;
+  --color-growth-text: #E6EDF3;
+  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.3);
+  --shadow-dialog: 0 24px 60px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+
+/* ---------- 2. BASE STYLES ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Stops section headings from hiding under the sticky navbar */
+  scroll-padding-top: calc(var(--nav-height) + 1rem);
+}
+
+/* Smooth scrolling only for people who haven't asked for reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+/* Prevent the page behind the pop-up from scrolling */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+h1, h2, h3, h4 {
+  margin: 0 0 0.5em;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+/* Clear, visible focus outline for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Hides text visually but keeps it readable by screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border-radius: var(--radius-control);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+
+/* ---------- 3. LAYOUT HELPERS ---------- */
+.container {
+  width: min(100% - 2.5rem, var(--max-width));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(4rem, 9vw, 7rem);
+  border-top: 1px solid var(--color-border);
+}
+
+.section-alt {
+  background: var(--color-alt);
+}
+
+.section-header {
+  max-width: var(--text-width);
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+  letter-spacing: -0.025em;
+}
+
+.section-intro {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--color-muted);
+}
+
+
+/* ---------- 4. NAVIGATION ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-header-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: var(--nav-height);
+}
+
+.nav-brand {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0 0 0 auto; /* "auto" on the left pushes the links to the right */
+  padding: 0;
+  list-style: none;
+}
+
+.nav-menu a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-control);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-menu a:hover {
+  color: var(--color-text);
+  background: var(--color-accent-soft);
+}
+
+/* Current section: shown with color AND an underline (not color alone) */
+.nav-menu a[aria-current] {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+/* Dark mode + sound buttons */
+.nav-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Shared style for the small square buttons in the navbar */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.icon-button:hover {
+  background: var(--color-accent-soft);
+}
+
+/* Show the moon in light mode, the sun in dark mode */
+:root[data-theme="dark"] .icon-moon,
+:root:not([data-theme="dark"]) .icon-sun {
+  display: none;
+}
+
+/* Show the right speaker icon for sound on/off */
+.sound-toggle[aria-pressed="true"] .icon-sound-off,
+.sound-toggle[aria-pressed="false"] .icon-sound-on {
+  display: none;
+}
+
+/* Hamburger button — hidden on desktop */
+.nav-toggle {
+  display: none;
+}
+
+/* Three lines made from one span and its ::before / ::after */
+.nav-toggle-bar,
+.nav-toggle-bar::before,
+.nav-toggle-bar::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-toggle-bar {
+  position: relative;
+}
+
+.nav-toggle-bar::before,
+.nav-toggle-bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.nav-toggle-bar::before { top: -6px; }
+.nav-toggle-bar::after  { top: 6px; }
+
+/* Turns into an "X" when the menu is open */
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar {
+  background: transparent;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar::before {
+  transform: translateY(6px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+
+/* ---------- 5. HERO ---------- */
+.hero {
+  padding-block: clamp(3.5rem, 9vw, 6.5rem) clamp(4rem, 9vw, 6.5rem);
+}
+
+/* Text on the left, photo on the right */
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5rem);
+}
+
+.hero-inner {
+  max-width: 36rem;
+}
+
+.hero-photo {
+  margin: 0;
+  justify-self: end;
+  width: 100%;
+  max-width: 26rem;
+}
+
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: #C9CCD1; /* shows while the photo loads (matches its backdrop) */
+  /* Thin offset line in the accent color ties the photo to the rest of the design */
+  box-shadow: 14px 14px 0 -1px var(--color-bg), 14px 14px 0 0 var(--color-accent);
+}
+
+.hero-title {
+  font-size: clamp(2.75rem, 1.6rem + 5vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.3em;
+}
+
+/* Puts "Anthony" on its own line under "Ethically Me," */
+.hero-name {
+  display: block;
+}
+
+.hero-tagline {
+  font-size: clamp(1.2rem, 1rem + 0.8vw, 1.5rem);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+}
+
+.hero-text {
+  max-width: 38rem;
+  font-size: 1.125rem;
+  color: var(--color-muted);
+  margin-bottom: 2rem;
+}
+
+
+/* ---------- 6. BUTTONS ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.button:hover {
+  background: var(--color-accent-hover);
+}
+
+.button-arrow {
+  transition: transform 0.2s ease;
+}
+
+.button:hover .button-arrow {
+  transform: translateY(2px);
+}
+
+
+/* ---------- 7. MORAL SELF-PORTRAIT ---------- */
+.manifesto {
+  margin-bottom: 4rem;
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-card);
+}
+
+.manifesto-heading {
+  font-size: 1rem;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.manifesto-text {
+  max-width: 60ch;
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.375rem);
+  line-height: 1.7;
+}
+
+.manifesto-text p:last-child {
+  margin-bottom: 0;
+}
+
+.values-heading {
+  font-size: 1.375rem;
+  margin-bottom: 1.25rem;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.value-card {
+  padding: 1.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.value-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 1.25rem;
+  border-radius: 10px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.value-icon svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.value-name {
+  font-size: 1.25rem;
+  margin-bottom: 0.4rem;
+}
+
+.value-desc {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+
+/* ---------- 8. MORAL MOMENTS ---------- */
+.moments-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.moment-card {
+  position: relative; /* lets the button's click area cover the whole card */
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.moment-card:hover,
+.moment-card:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-soft);
+}
+
+.moment-number {
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.moment-title {
+  font-size: 1.375rem;
+  margin-bottom: 0.5rem;
+}
+
+.moment-preview {
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+  color: var(--color-muted);
+}
+
+.moment-button {
+  align-self: flex-start;
+  padding: 0.55rem 1rem;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-control);
+  color: var(--color-accent);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Invisible layer that makes the entire card clickable */
+.moment-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-card);
+}
+
+.moment-card:hover .moment-button {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+
+/* ---------- 9. REFLECTION POP-UP WINDOW ---------- */
+.reflection {
+  width: min(100% - 2rem, 46rem);
+  max-height: min(88vh, 52rem);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-dialog);
+}
+
+.reflection[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.reflection::backdrop {
+  background: rgba(15, 18, 22, 0.6);
+}
+
+/* A short fade-in so it's clear the window opened */
+@media (prefers-reduced-motion: no-preference) {
+  .reflection[open] {
+    animation: reflection-in 0.2s ease-out;
+  }
+}
+
+@keyframes reflection-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reflection-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-shrink: 0;
+  padding: 1.5rem 1.75rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.reflection-number {
+  margin: 0 0 0.25rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.reflection-title {
+  margin: 0;
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 1.875rem);
+}
+
+.reflection-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.reflection-close:hover {
+  background: var(--color-accent-soft);
+}
+
+.reflection-body {
+  padding: 1.5rem 1.75rem 2rem;
+  overflow-y: auto;
+}
+
+.reflection-body h3 {
+  margin: 1.75rem 0 0.4rem;
+  font-size: 1.0625rem;
+  color: var(--color-accent);
+}
+
+.reflection-body h3:first-child {
+  margin-top: 0;
+}
+
+.reflection-body p {
+  max-width: 62ch;
+}
+
+/* Photo space at the top of each reflection */
+.reflection-figure {
+  margin: 0 0 1.75rem;
+}
+
+.reflection-figure img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;            /* shows the whole photo without cropping */
+  background: var(--color-alt);
+  border-radius: var(--radius-control);
+}
+
+.reflection-figure figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.reflection-figure figcaption:empty {
+  display: none;
+}
+
+/* Shown when the photo file hasn't been added yet */
+.reflection-figure.is-empty img {
+  display: none;
+}
+
+.reflection-figure.is-empty::before {
+  content: attr(data-placeholder);
+  display: grid;
+  place-items: center;
+  aspect-ratio: 2 / 1;
+  padding: 1rem;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-alt);
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+  text-align: center;
+}
+
+.reflection-figure + h3 {
+  margin-top: 0;
+}
+
+.reflection-body .principles {
+  margin-bottom: 0.5rem;
+}
+
+.reflection-body .insight {
+  margin-bottom: 0;
+  padding: 1rem 1.25rem;
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-control);
+}
+
+
+/* ---------- 10. MY MORAL GROWTH ---------- */
+.growth {
+  background: var(--color-growth-bg);
+  color: var(--color-growth-text);
+  border-top: none;
+}
+
+.growth-inner {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.growth .section-title {
+  color: #FFFFFF;
+  margin-bottom: 1.25rem;
+}
+
+.growth-text {
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.375rem);
+  line-height: 1.7;
+}
+
+.back-to-top {
+  display: inline-block;
+  margin-top: 1.5rem;
+  color: #FFFFFF;
+  font-weight: 500;
+  text-underline-offset: 4px;
+}
+
+/* White focus outline so it stays visible on the dark background */
+.growth :focus-visible {
+  outline-color: #FFFFFF;
+}
+
+
+/* ---------- 11. FOOTER ---------- */
+.site-footer {
+  padding-block: 2.5rem;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.footer-name {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.footer-links {
+  display: flex;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  color: var(--color-text);
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.footer-link:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+
+/* ---------- 12. RESPONSIVE ADJUSTMENTS ---------- */
+
+/* Tablet: value cards stack, photo moves above the title */
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-photo {
+    order: -1;            /* visually first; screen readers still read the title first */
+    justify-self: start;
+    max-width: 15rem;
+  }
+
+  .hero-photo img {
+    border-radius: 16px;
+    box-shadow: 10px 10px 0 -1px var(--color-bg), 10px 10px 0 0 var(--color-accent);
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablet & mobile: links move into the hamburger menu */
+@media (max-width: 860px) {
+  .nav-brand {
+    margin-right: auto;
+  }
+
+  .nav-actions { order: 1; }
+  .nav-toggle  { order: 2; display: inline-flex; }
+
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    margin: 0;
+    padding: 0.5rem 1.25rem 1rem;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-menu.is-open {
+    display: flex;
+  }
+
+  .nav-menu a {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+/* Mobile: single-column moments, smaller photo */
+@media (max-width: 760px) {
+  .moments-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Smaller photo on phones so the button stays near the top */
+  .hero-grid {
+    gap: 1.75rem;
+  }
+
+  .hero-photo {
+    max-width: 10.5rem;
+  }
+
+  .hero-photo img {
+    border-radius: 14px;
+    box-shadow: 8px 8px 0 -1px var(--color-bg), 8px 8px 0 0 var(--color-accent);
+  }
+
+  .reflection-header,
+  .reflection-body {
+    padding-inline: 1.25rem;
+  }
+}

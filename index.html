@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ethically Me, Anthony | A Personal Ethics Portfolio</title>
+  <meta name="description" content="A personal ethics portfolio by Thomas Anthony Dator documenting six everyday moral moments and what I learned from them.">
+  <meta name="author" content="Thomas Anthony Dator">
+
+  <!-- Browser tab icon -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!--
+    LINK PREVIEWS: controls how the site looks when shared on Messenger, LinkedIn, etc.
+    DEPLOY: if your website address is different, update the two URLs below.
+  -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ethically Me, Anthony">
+  <meta property="og:description" content="A personal journey through everyday ethical decisions.">
+  <meta property="og:url" content="https://tkmants.github.io/ethically-me/">
+  <meta property="og:image" content="https://tkmants.github.io/ethically-me/images/portrait.jpg">
+  <meta name="twitter:card" content="summary">
+
+  <!--
+    Picks light or dark mode BEFORE the page draws, so it never flashes the wrong color.
+    It uses the visitor's last choice, or their device setting if they haven't chosen yet.
+  -->
+  <script>
+    (function () {
+      var theme = 'light';
+      try {
+        theme = localStorage.getItem('ethically-me-theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch (e) {}
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
+  <!--
+    FONT: "DM Sans" from Google Fonts (free and open-source).
+    If you are offline, the site automatically falls back to your computer's system font.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Lets keyboard users jump straight past the navigation -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="nav-brand" href="#home">Ethically Me</a>
+
+      <!-- Hamburger button (only visible on small screens) -->
+      <button class="icon-button nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+        <span class="visually-hidden">Menu</span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#self-portrait">Moral Self-Portrait</a></li>
+        <li><a href="#moments">Moral Moments</a></li>
+        <li><a href="#growth">My Growth</a></li>
+      </ul>
+
+      <!-- Dark mode + sound buttons -->
+      <div class="nav-actions">
+        <button class="icon-button theme-toggle" type="button" aria-pressed="false" title="Dark mode">
+          <span class="visually-hidden">Dark mode</span>
+          <!-- Moon (shown in light mode) -->
+          <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+          <!-- Sun (shown in dark mode) -->
+          <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+          </svg>
+        </button>
+
+        <button class="icon-button sound-toggle" type="button" aria-pressed="true" title="Hover sounds">
+          <span class="visually-hidden">Hover sounds</span>
+          <!-- Speaker with waves (sound on) -->
+          <svg class="icon-sound-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5 6 9H2v6h4l5 4V5z"/>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>
+          </svg>
+          <!-- Speaker with X (sound off) -->
+          <svg class="icon-sound-off" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5 6 9H2v6h4l5 4V5z"/>
+            <path d="m22 9-6 6M16 9l6 6"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ===================== HOME / HERO ===================== -->
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+
+        <div class="hero-inner">
+          <h1 class="hero-title" id="hero-title">Ethically Me, <span class="hero-name">Anthony</span></h1>
+          <p class="hero-tagline">A personal journey through everyday ethical decisions.</p>
+
+          <!-- EDIT: You can rewrite this introduction in your own words -->
+          <p class="hero-text">
+            This portfolio documents real moments from my life this semester when I had to think
+            about what the right thing to do was. For each one, I describe what happened, the values
+            that were in tension, and what the experience taught me about the person I want to be.
+          </p>
+
+          <a class="button" href="#self-portrait">
+            Explore My Journey <span class="button-arrow" aria-hidden="true">↓</span>
+          </a>
+        </div>
+
+        <!--
+          EDIT: Your photo lives in the "images" folder.
+          To use a different photo, replace images/portrait.jpg (a 4:5 portrait works best)
+          and put your name in the alt text.
+        -->
+        <figure class="hero-photo">
+          <img src="images/portrait.jpg" width="960" height="1200"
+               alt="Portrait of Thomas Anthony Dator in a denim jacket, arms crossed">
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ===================== 1. MORAL SELF-PORTRAIT ===================== -->
+    <section class="section" id="self-portrait" aria-labelledby="self-portrait-title">
+      <div class="container">
+        <header class="section-header">
+          <h2 class="section-title" id="self-portrait-title">Moral Self-Portrait</h2>
+          <p class="section-intro">The beliefs and values that guide how I try to act.</p>
+        </header>
+
+        <!-- Personal Ethics Manifesto -->
+        <article class="manifesto" aria-labelledby="manifesto-title">
+          <h3 class="manifesto-heading" id="manifesto-title">Personal Ethics Manifesto</h3>
+          <div class="manifesto-text">
+            <p><strong>I am a person who lives by his own principles.</strong> I believe in karma and am easily guilted by my own actions and inactions. I value integrity, responsibility, and fairness, and I try to let these values guide the way I treat others and make decisions. I believe that being successful should never come at the expense of honesty, respect, or the well-being of others. When I make mistakes, and I often do, I want to take responsibility for them, learn from them, and become better rather than simply finding someone or something else to blame. As I continue to grow as a student, leader, and person, I want to remain open to learning from my experiences and questioning my own decisions. Ultimately, I want my actions to reflect not only what I am capable of achieving, but also the kind of person I choose to be.</p>
+          </div>
+        </article>
+
+        <!-- Three Core Values -->
+        <h3 class="values-heading">My Three Core Values</h3>
+        <ul class="values-grid">
+          <li class="value-card">
+            <div class="value-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <h4 class="value-name">Integrity</h4>
+            <p class="value-desc">Doing what is right even when nobody is watching.</p>
+          </li>
+
+          <li class="value-card">
+            <div class="value-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/>
+                <path d="m16 11 2 2 4-4"/>
+              </svg>
+            </div>
+            <h4 class="value-name">Responsibility</h4>
+            <p class="value-desc">Taking ownership of my choices, actions, and their consequences.</p>
+          </li>
+
+          <li class="value-card">
+            <div class="value-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v18"/>
+                <path d="M7 21h10"/>
+                <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+                <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+                <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+              </svg>
+            </div>
+            <h4 class="value-name">Fairness</h4>
+            <p class="value-desc">Treating people fairly while considering different perspectives and circumstances.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== 2. MORAL MOMENTS ===================== -->
+    <!--
+      HOW THIS WORKS:
+      - Each card below shows the number, title, and a short preview.
+      - The full reflection for each card is in a <template> further down
+        (look for "FULL REFLECTIONS"). The template id must match the card's data-moment value.
+      - The title on the card is reused automatically in the pop-up window.
+    -->
+    <section class="section section-alt" id="moments" aria-labelledby="moments-title">
+      <div class="container">
+        <header class="section-header">
+          <h2 class="section-title" id="moments-title">Moral Moments</h2>
+          <p class="section-intro">
+            Six situations from my own life. Each reflection follows the same structure:
+            the situation, the ethical conflict, the ethical lens, my decision, and what I learned.
+          </p>
+        </header>
+
+        <ul class="moments-grid">
+          <li class="moment-card" data-moment="01">
+            <p class="moment-number">Moral Moment 01</p>
+            <h3 class="moment-title">Inspiration for a History Poster</h3>
+            <p class="moment-preview">Looking at other people's work for ideas when I didn't feel confident in graphic design.</p>
+            <button class="moment-button" type="button">
+              Read Reflection <span class="visually-hidden">for Moral Moment 01</span>
+            </button>
+          </li>
+
+          <li class="moment-card" data-moment="02">
+            <p class="moment-number">Moral Moment 02</p>
+            <h3 class="moment-title">Helping a Friend Before His Exam</h3>
+            <p class="moment-preview">A co-officer from a lower year asked what might come up in his practical exam, and I shared more than I should have.</p>
+            <button class="moment-button" type="button">
+              Read Reflection <span class="visually-hidden">for Moral Moment 02</span>
+            </button>
+          </li>
+
+          <li class="moment-card" data-moment="03">
+            <p class="moment-number">Moral Moment 03</p>
+            <h3 class="moment-title">The Gossip I Didn't Stop</h3>
+            <p class="moment-preview">A friend guessed out loud about why someone we know broke up, and I let the conversation continue.</p>
+            <button class="moment-button" type="button">
+              Read Reflection <span class="visually-hidden">for Moral Moment 03</span>
+            </button>
+          </li>
+
+          <li class="moment-card" data-moment="04">
+            <p class="moment-number">Moral Moment 04</p>
+            <h3 class="moment-title">Shortcuts During Online Classes</h3>
+            <p class="moment-preview">During the pandemic, I often relied on AI and online forums for answers just to get good grades.</p>
+            <button class="moment-button" type="button">
+              Read Reflection <span class="visually-hidden">for Moral Moment 04</span>
+            </button>
+          </li>
+
+          <li class="moment-card" data-moment="05">
+            <p class="moment-number">Moral Moment 05</p>
+            <h3 class="moment-title">Losing My Temper Over a Game</h3>
+            <p class="moment-preview">I said hurtful things about a friend because her luck in a game was better than mine.</p>
+            <button class="moment-button" type="button">
+              Read Reflection <span class="visually-hidden">for Moral Moment 05</span>
+            </button>
+          </li>
+
+          <li class="moment-card" data-moment="06">
+            <p class="moment-number">Moral Moment 06</p>
+            <h3 class="moment-title">The Wrong Price at the Bakery</h3>
+            <p class="moment-preview">A cashier told me a lower price than what I owed, and I corrected her.</p>
+            <button class="moment-button" type="button">
+              Read Reflection <span class="visually-hidden">for Moral Moment 06</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== 3. MY MORAL GROWTH ===================== -->
+    <section class="section growth" id="growth" aria-labelledby="growth-title">
+      <div class="container">
+        <div class="growth-inner">
+          <h2 class="section-title" id="growth-title">My Moral Growth</h2>
+          <div class="growth-text">
+            <p>Looking back on these experiences, I realized that ethics is not only about making big decisions, but also about the small choices I make every day. Each moment made me more aware of how my actions can affect other people, even when I do not immediately see the consequences. I learned that being ethical does not mean always being perfect; it means being willing to recognize my mistakes, reflect on them, and do better. Moving forward, I want to be more mindful of my choices and let my values guide me even in ordinary situations.</p>
+          </div>
+          <a class="back-to-top" href="#home">Back to top <span aria-hidden="true">↑</span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-name">Thomas Anthony Dator</p>
+        <p>Ethically Me, a personal ethics portfolio</p>
+        <p>GED0061 - TE41</p>
+      </div>
+
+      <!-- Links open in a new tab -->
+      <ul class="footer-links" aria-label="My profiles">
+        <li>
+          <a class="footer-link" href="https://github.com/tkmants" target="_blank" rel="noopener noreferrer">
+            GitHub <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg><span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+        </li>
+        <li>
+          <a class="footer-link" href="https://www.linkedin.com/in/thomas-anthony-dator/" target="_blank" rel="noopener noreferrer">
+            LinkedIn <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg><span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+
+
+  <!-- =====================================================================
+       FULL REFLECTIONS
+       Each <template> holds the complete reflection for one Moral Moment.
+       It stays hidden until its card's "Read Reflection" button is clicked.
+
+       PHOTOS: Save a picture in the "images" folder with the matching name
+       (moment-01.jpg, moment-02.jpg, ...) and it appears at the top of that
+       reflection automatically. Until then, a dashed "photo space" box shows
+       on your computer only; on the live website, missing photos are hidden.
+       - Describe the photo in alt="" (for screen readers).
+       - Write an optional caption between <figcaption> and </figcaption>.
+       - To add a second photo, copy the whole <figure> block and change the file name.
+       - Don't want a photo for a moment? Delete its <figure> block.
+       ===================================================================== -->
+
+  <template id="reflection-01">
+    <figure class="reflection-figure">
+      <img src="images/moment-01.jpg" alt="[Describe the photo]">
+      <figcaption></figcaption>
+    </figure>
+
+    <h3>The Situation</h3>
+    <p>For a history project, we were tasked to make a poster presenting a timeline. Graphic design isn't one of my strengths, so before starting, I looked at other people's work to get ideas for how to lay out and design mine.</p>
+
+    <h3>The Ethical Conflict</h3>
+    <p>On one side was my need for guidance and my wish to turn in a decent poster despite my weaker design skills. On the other side were originality and respect for the people whose work I was looking at. The question was where learning from someone's design ends and copying it begins, and whether it was fair to submit something shaped by other people's ideas.</p>
+
+    <h3>Ethical Lens</h3>
+    <p class="principles"><strong>Principles:</strong> Integrity, Honesty, Respect</p>
+    <p>Integrity asks that the work I submit is genuinely mine. Honesty means not presenting someone else's creative choices as my own. Respect applies to the people whose posters I studied, since their effort and ideas deserve recognition rather than being taken without credit. Looking at examples isn't wrong in itself; it's how many people learn design. It becomes a problem only when inspiration turns into imitation.</p>
+
+    <h3>Decision / Reflection</h3>
+    <p>I used other people's work as a source of ideas while I made my own poster. I think this was an acceptable choice, because finding inspiration is a normal part of learning, especially in an area where I'm still developing. Looking back, the most ethical approach is to study several examples to understand what makes them work, build my own design from that understanding, and give credit if I ever borrow something distinctive from a specific person.</p>
+
+    <h3>My Moral Insight</h3>
+    <p class="insight"><strong>This experience taught me that…</strong> looking for inspiration isn't a weakness, but there is a line between learning from others and taking from them, and integrity means staying on the right side of it.</p>
+  </template>
+
+  <template id="reflection-02">
+    <figure class="reflection-figure">
+      <img src="images/moment-02.jpg" alt="[Describe the photo]">
+      <figcaption></figcaption>
+    </figure>
+
+    <h3>The Situation</h3>
+    <p>During midterm season, a friend who is also a co-officer from a lower year asked me what might come up in the practical exam for his laboratory subjects. I sent him some information and relevant files.</p>
+
+    <h3>The Ethical Conflict</h3>
+    <p>I wanted to help a friend and fellow officer who was stressed about his exams. But helping him this way conflicted with fairness to his classmates, who didn't get the same information, and with the purpose of the exam itself, which is to measure what each student has actually learned. Being loyal to one person meant putting everyone else at a disadvantage.</p>
+
+    <h3>Ethical Lens</h3>
+    <p class="principles"><strong>Principles:</strong> Fairness, Justice, Beneficence</p>
+    <p>Beneficence explains why I wanted to help: I cared about him doing well. Fairness and justice require that everyone taking the same exam competes on equal terms, and specific information about what may come up gave him an advantage his classmates didn't have. Real beneficence would have meant helping him learn the material, not just helping him pass.</p>
+
+    <h3>Decision / Reflection</h3>
+    <p>I shared the information and files with him. Even at the time, I believed this gave him an unfair advantage. I still could have helped him without sharing too much, for example by explaining concepts he found confusing, reviewing lab procedures with him, or sharing how I prepared for my own practical exams. That would have supported him as a friend while keeping things fair for everyone else.</p>
+
+    <h3>My Moral Insight</h3>
+    <p class="insight"><strong>This experience taught me that…</strong> being a good friend doesn't mean giving someone every advantage I can. The most helpful thing is often to help them learn, in a way that is still fair to everyone else.</p>
+  </template>
+
+  <template id="reflection-03">
+    <figure class="reflection-figure">
+      <img src="images/moment-03.jpg" alt="[Describe the photo]">
+      <figcaption></figcaption>
+    </figure>
+
+    <h3>The Situation</h3>
+    <p>During a conversation, a friend mentioned in passing some information about the relationship of someone we both know. She then started theorizing about why they might have broken up, even though neither of us knew what had actually happened. We both knew that sharing gossip like this was wrong, but I didn't stop her.</p>
+
+    <h3>The Ethical Conflict</h3>
+    <p>I didn't want to make the conversation awkward or seem preachy to my friend. At the same time, the person we were talking about deserved to have their privacy respected, and they weren't there to explain or defend themselves. Guessing about someone's breakup can easily turn into a rumor that people start to believe.</p>
+
+    <h3>Ethical Lens</h3>
+    <p class="principles"><strong>Principles:</strong> Privacy, Respect, Non-maleficence</p>
+    <p>A breakup is a personal matter, and privacy means the people involved get to decide who knows about it and what is said. Respect means not treating someone's private life as entertainment behind their back. Non-maleficence, the duty not to cause harm, applies because speculation can spread and hurt someone's reputation and feelings, even if we never meant it to.</p>
+
+    <h3>Decision / Reflection</h3>
+    <p>I didn't stop her and let the conversation go on. By staying silent, I became part of it. The most ethical response would have been to gently redirect the conversation, for example by saying that we don't really know what happened and that it isn't our business, and then changing the topic. It wouldn't have needed to be confrontational to make a difference.</p>
+
+    <h3>My Moral Insight</h3>
+    <p class="insight"><strong>This experience taught me that…</strong> staying silent is also a choice, and protecting someone's privacy can take as little as one honest sentence.</p>
+  </template>
+
+  <template id="reflection-04">
+    <figure class="reflection-figure">
+      <img src="images/moment-04.jpg" alt="[Describe the photo]">
+      <figcaption></figcaption>
+    </figure>
+
+    <h3>The Situation</h3>
+    <p>During the pandemic, I frequently used AI and question-and-answer websites and forums to find possible answers for my schoolwork. I personally disliked online classes, and at the time, all I wanted was good grades.</p>
+
+    <h3>The Ethical Conflict</h3>
+    <p>I wanted good grades and a way to get through a period of school I found frustrating. That conflicted with honesty about whose work I was submitting and with my responsibility for my own learning. Grades are supposed to show what I understand, and relying on outside answers made them say something that wasn't fully true. It was also unfair to classmates who were doing the work themselves.</p>
+
+    <h3>Ethical Lens</h3>
+    <p class="principles"><strong>Principles:</strong> Honesty, Integrity, Responsibility</p>
+    <p>Honesty means the work I submit should reflect my own effort and understanding. Integrity means doing the right thing even when no one is checking, and online classes made it easy to go unchecked. Responsibility means owning my education, including the gaps in knowledge that shortcuts left behind.</p>
+
+    <h3>Decision / Reflection</h3>
+    <p>I relied on these tools often, mostly to get answers rather than to understand the lessons. I understand why I did it, since online classes were genuinely hard for me, but that reason doesn't make it right. The more ethical approach would have been to use AI and the internet as learning aids, such as asking them to explain a concept or checking my answers after trying on my own, while following my teachers' rules, and to ask for help when I was struggling instead of looking for shortcuts.</p>
+
+    <h3>My Moral Insight</h3>
+    <p class="insight"><strong>This experience taught me that…</strong> a grade is only worth something if it honestly reflects what I learned, and difficult circumstances are a reason to ask for help, not to cut corners.</p>
+  </template>
+
+  <template id="reflection-05">
+    <figure class="reflection-figure">
+      <img src="images/moment-05.jpg" alt="[Describe the photo]">
+      <figcaption></figcaption>
+    </figure>
+
+    <h3>The Situation</h3>
+    <p>I once said negative things about a friend because my luck was worse than hers in a video game we played together. This led to her unfriending me, and rightfully so.</p>
+
+    <h3>The Ethical Conflict</h3>
+    <p>In the moment, my frustration and competitiveness took over. That conflicted with the respect and kindness I owe a friend. Her good luck wasn't something she controlled, and it had nothing to do with my bad luck, yet I made her the target of my feelings.</p>
+
+    <h3>Ethical Lens</h3>
+    <p class="principles"><strong>Principles:</strong> Respect, Non-maleficence, Responsibility</p>
+    <p>Respect means treating others with dignity, even when I'm upset. Non-maleficence applies because my words hurt her and damaged our friendship. Responsibility means recognizing that the real problem was my reaction, not her, and accepting the consequences that followed.</p>
+
+    <h3>Decision / Reflection</h3>
+    <p>I let my frustration speak for me and said things I shouldn't have, and it cost me the friendship. Looking back, my judgment was clouded and I could have handled the situation better. The most ethical response would have been to step away from the game when I noticed I was getting frustrated, remind myself that her luck wasn't her fault, and, once I had said something hurtful, offer a sincere apology without making excuses.</p>
+
+    <h3>My Moral Insight</h3>
+    <p class="insight"><strong>This experience taught me that…</strong> my emotions are my responsibility, and something as small as a game can damage a real relationship if I let frustration take control.</p>
+  </template>
+
+  <template id="reflection-06">
+    <figure class="reflection-figure">
+      <img src="images/moment-06.jpg" alt="[Describe the photo]">
+      <figcaption></figcaption>
+    </figure>
+
+    <h3>The Situation</h3>
+    <p>After a gym session, I went to a bakery to buy some bread and calculated exactly what I had to pay. The cashier, however, told me a lower price. I corrected her and gave her the right amount.</p>
+
+    <h3>The Ethical Conflict</h3>
+    <p>Keeping quiet would have been easy, and I would have saved some money without anyone noticing. On the other hand, paying less than the real price wouldn't have been fair to the bakery, and if the register came up short, the cashier could have been the one held responsible for the mistake.</p>
+
+    <h3>Ethical Lens</h3>
+    <p class="principles"><strong>Principles:</strong> Honesty, Fairness, Integrity</p>
+    <p>Honesty means telling the truth even when a lie or silence would benefit me. Fairness means paying what I actually owe for what I received. Integrity, one of my core values, is about doing what is right even when nobody is watching, and this was exactly that kind of moment.</p>
+
+    <h3>Decision / Reflection</h3>
+    <p>I corrected the cashier and paid the right amount. I believe this was the right decision. The amount was small, but small moments like this are where honest habits are built, and it also protected someone who had simply made a mistake.</p>
+
+    <h3>My Moral Insight</h3>
+    <p class="insight"><strong>This experience taught me that…</strong> integrity shows most in small moments when no one would notice, and being honest is easier when it's already a habit.</p>
+  </template>
+
+
+  <!-- ===================== REFLECTION POP-UP WINDOW =====================
+       This one window is reused for all six reflections. You don't need to edit it.
+  -->
+  <dialog class="reflection" id="reflection-dialog" aria-labelledby="reflection-title">
+    <div class="reflection-header">
+      <div>
+        <p class="reflection-number" id="reflection-number"></p>
+        <h2 class="reflection-title" id="reflection-title"></h2>
+      </div>
+      <button class="reflection-close" type="button" data-close>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+        <span class="visually-hidden">Close reflection</span>
+      </button>
+    </div>
+    <div class="reflection-body" id="reflection-body"></div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
