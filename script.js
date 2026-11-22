@@ -171,12 +171,9 @@ function preparePhotos(content) {
   content.querySelectorAll('.reflection-figure img').forEach((img) => {
     const figure = img.closest('.reflection-figure');
     figure.dataset.placeholder = 'Photo space: save a picture as ' + img.getAttribute('src');
+
     img.addEventListener('error', () => {
-      if (isEditingLocally) {
-        figure.classList.add('is-empty');
-      } else {
-        figure.remove();
-      }
+      figure.classList.add('is-empty');
     });
   });
 }
